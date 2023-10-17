@@ -1,0 +1,42 @@
+public class ListaSimplesEncadeada<T> {
+	private No<T> primeiro;
+
+	public void adicionar(T valor) {
+		No<T> novoNo = new No<>(valor);
+		if (primeiro == null) {
+			primeiro = novoNo;
+		} else {
+			No<T> atual = primeiro;
+			while (atual.getProximo() != null) {
+				atual = atual.getProximo();
+			}
+			atual.setProximo(novoNo);
+		}
+	}
+
+	public T[] TransformarEmVetor() {
+		int tamanho = tamanhoDaLista();
+		T[] vetor = (T[]) new Object[tamanho];
+		TransformarEmVetorRecursivo(primeiro, vetor, 0);
+		return vetor;
+	}
+
+	private int tamanhoDaLista() {
+		int tamanho = 0;
+		No<T> atual = primeiro;
+		while (atual != null) {
+			tamanho++;
+			atual = atual.getProximo();
+		}
+		return tamanho;
+	}
+
+	private void TransformarEmVetorRecursivo(No<T> no, T[] vetor, int indice) {
+		if (no == null) {
+			return;
+		}
+
+		vetor[indice] = no.getValor();
+		TransformarEmVetorRecursivo(no.getProximo(), vetor, indice + 1);
+	}
+}
